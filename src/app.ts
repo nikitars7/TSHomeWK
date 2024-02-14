@@ -1,5 +1,7 @@
 // showHello('greeting', 'TypeScript');
 
+import { Area, Group, Level, School, Student } from './lesson03.3_HomeTask';
+
 // function showHello(divName: string, name: string) {
 //     const elt = document.getElementById(divName);
 //     elt!.innerText = `Hello from ${name}`;
@@ -154,3 +156,67 @@ const calcTotalPages = (array: IArray[]): bigint => {
 };
 
 console.log(calcTotalPages(data));
+
+///
+
+const school: School = new School();
+console.log(school.areas);
+school.addArea('math');
+console.log(school.areas);
+school.addArea('physics');
+school.removeArea('math');
+console.log(school.areas);
+school.addLecturer({
+    name: 'Joseph',
+    surname: 'Besos',
+    position: 'CEO',
+    company: 'Google',
+    experience: '15 years',
+    courses: 'None',
+    contacts: 'mail',
+});
+console.log(school.lecturers);
+school.removeLecturer('Joseph');
+console.log(school.lecturers);
+
+///
+
+const area: Area = new Area('Astronomy');
+console.log(area.name);
+console.log(area.levels);
+area.addLevel('Proficiency');
+console.log(area.levels);
+area.removeLevel('Proficiency');
+console.log(area.levels);
+
+///
+
+const level: Level = new Level('god', 'nothingToSay');
+console.log(level.name);
+console.log(level.description);
+console.log(level.groups);
+level.addGroup('medium');
+console.log(level.groups);
+level.removeGroup('Medium');
+console.log(level.groups);
+
+///
+
+const group: Group = new Group('IT', 'senior');
+group.area = 'frond-end';
+group.status = true;
+console.log(group);
+group.addStudent('Mike');
+group.addStudent('Anna');
+console.log(group.studens);
+console.log(group);
+group.removeStudent('Anna');
+
+///
+
+const student: Student = new Student('Vlad', 'Ivanov', 2003);
+student.grade = { react: 5 };
+console.log(student);
+console.log(student.getPerformanceRating());
+student.visit = { react: true };
+console.log(student.getPerformanceRating());
