@@ -1,6 +1,6 @@
 // showHello('greeting', 'TypeScript');
 
-import { Circle, Rectangle, Square, Squares, Triangle } from './classes';
+import { Circle, Rectangle, Square, SquareCalculate, Squares, Triangle } from './classes';
 import { Area, Group, Level, School, Student } from './lesson03.3_HomeTask';
 
 // function showHello(divName: string, name: string) {
@@ -225,13 +225,24 @@ console.log(student.getPerformanceRating());
 console.log('hello world');
 
 // Classes HW
-const circle: Circle = new Circle(20);
-const square: Square = new Square(15);
-const rectangle: Rectangle = new Rectangle(10, 15);
-const triangle: Triangle = new Triangle(20, 15);
-console.log(circle.calculateArea(Squares.Circle, circle.radius));
-console.log(square.calculateArea(Squares.Square, square.side));
-console.log(rectangle.calculateArea(Squares.Rectangle, rectangle.firstSide, rectangle.secondSide));
-console.log(triangle.calculateArea(Squares.Triangle, triangle.side, triangle.height));
+const circle: Circle = new Circle(20, 'Circle', 'Red');
+const square: Square = new Square(15, 'Square', 'Blue');
+const rectangle: Rectangle = new Rectangle(10, 15, 'Rectangle', 'Yellow');
+const triangle: Triangle = new Triangle(20, 15, 'Triangle', 'Black');
+
+const circleSquareCalc = SquareCalculate.calculateArea(Squares.Circle, circle.radius);
+const rectangleSquareCalc = SquareCalculate.calculateArea(Squares.Rectangle, rectangle.firstSide, rectangle.secondSide);
+const squareCalc = SquareCalculate.calculateArea(Squares.Square, square.side);
+const triangleSquareCalc = SquareCalculate.calculateArea(Squares.Triangle, triangle.side, triangle.height);
+
+console.log(circleSquareCalc);
+console.log(rectangleSquareCalc);
+console.log(squareCalc);
+console.log(triangleSquareCalc);
+// console.log(circle.calculateArea(Squares.Circle, circle.radius));
+// console.log(square.calculateArea(Squares.Square, square.side));
+// console.log(rectangle.calculateArea(Squares.Rectangle, rectangle.firstSide, rectangle.secondSide));
+// console.log(triangle.calculateArea(Squares.Triangle, triangle.side, triangle.height));
 rectangle.print();
 square.print();
+// console.log(circle.name);

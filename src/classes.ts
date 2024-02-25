@@ -1,8 +1,5 @@
-interface IShape {
-    name: string;
-}
-interface IColor {
-    color: string;
+interface IPrint {
+    print(): void;
 }
 export enum Squares {
     Square = 'Square',
@@ -10,8 +7,12 @@ export enum Squares {
     Rectangle = 'Rectangle',
     Triangle = 'Triangle',
 }
-class SquareCalculate {
-    calculateArea(squareCalc: Squares, ...args: [number] | [number, number]): number | undefined {
+
+export class SquareCalculate {
+    private constructor() {}
+    static calculateArea(squareCalc: Squares, side: number): number;
+    static calculateArea(squareCalc: Squares, side: number, height: number): number;
+    static calculateArea(squareCalc: Squares, ...args: [number] | [number, number]): number {
         if (squareCalc === Squares.Circle && args.length === 1) {
             const [radius] = args;
             return Math.PI * Math.pow(radius, 2);
@@ -24,53 +25,26 @@ class SquareCalculate {
         } else if (squareCalc === Squares.Triangle && args.length === 2) {
             const [side, height] = args;
             return (side * height) / 2;
+        } else {
+            throw new Error('Can not calculate due to something');
         }
     }
 }
-export class Circle extends SquareCalculate implements IShape, IColor {
-    readonly name!: 'Circle';
-    readonly color!: 'Red';
-    radius;
-    constructor(radius: number) {
-        super();
-        this.radius = radius;
-    }
+export class Circle {
+    constructor(public radius: number, readonly name: string, readonly color: string) {}
 }
-export class Rectangle extends SquareCalculate implements IShape, IColor {
-    readonly name!: 'Rectangle';
-    readonly color!: 'Blue';
-    firstSide;
-    secondSide;
-    constructor(firstSide: number, secondSide: number) {
-        super();
-        this.firstSide = firstSide;
-        this.secondSide = secondSide;
-    }
-
+export class Rectangle implements IPrint {
+    constructor(public firstSide: number, public secondSide: number, readonly name: string, readonly color: string) {}
     print(): void {
         console.log('a*b');
     }
 }
-export class Square extends SquareCalculate implements IShape, IColor {
-    readonly name!: 'Square';
-    readonly color!: 'Green';
-    side;
-    constructor(side: number) {
-        super();
-        this.side = side;
-    }
+export class Square implements IPrint {
+    constructor(public side: number, readonly name: string, readonly color: string) {}
     print(): void {
         console.log('a**2');
     }
 }
-export class Triangle extends SquareCalculate implements IShape, IColor {
-    readonly name!: 'Triangle';
-    readonly color!: 'Yellow';
-    side;
-    height;
-    constructor(side: number, height: number) {
-        super();
-        this.side = side;
-        this.height = height;
-    }
+export class Triangle {
+    constructor(public side: number, public height: number, readonly name: string, readonly color: string) {}
 }
