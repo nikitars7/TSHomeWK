@@ -1,6 +1,7 @@
 // showHello('greeting', 'TypeScript');
 
 import { Circle, Rectangle, Square, SquareCalculate, Squares, Triangle } from './classes';
+import { checkObj, checkSignature } from './indexSignatures';
 import { Area, Group, Level, School, Student } from './lesson03.3_HomeTask';
 
 // function showHello(divName: string, name: string) {
@@ -246,3 +247,5 @@ console.log(triangleSquareCalc);
 rectangle.print();
 square.print();
 // console.log(circle.name);
+
+console.log(checkSignature(checkObj));
