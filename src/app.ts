@@ -1,6 +1,7 @@
 // showHello('greeting', 'TypeScript');
 
 import { Circle, Rectangle, Square, SquareCalculate, Squares, Triangle } from './classes';
+import { Shelf, callback, data2, fetchData, purge } from './generics';
 import { checkObj, checkSignature } from './indexSignatures';
 import { Area, Group, Level, School, Student } from './lesson03.3_HomeTask';
 
@@ -74,6 +75,7 @@ enum Category {
     HTML = 'HTML',
     TypeScript = 'TypeScript',
     Angular = 'Angular',
+    Software = 'Software',
 }
 interface IBookNew {
     id: number;
@@ -249,3 +251,72 @@ square.print();
 // console.log(circle.name);
 
 console.log(checkSignature(checkObj));
+
+// function strEnum<T extends string>(o: Array<T>): { [K in T]: K } {
+//     return o.reduce((res, key) => {
+//         res[key] = key;
+//         return res;
+//     }, Object.create(null));
+// }
+
+// const Direction = strEnum(['North', 'South', 'East', 'West']);
+
+// console.log(Direction);
+
+// type IDirection = keyof typeof Direction;
+
+// let sample: IDirection;
+
+// sample = Direction.North; // Okay
+// sample = 'North'; // Okay
+// sample = 'AnythingElse'; // ERROr
+
+let a = Array(3);
+let b = [undefined, undefined, undefined];
+let c: any[] = [];
+c.length = 3;
+console.log(a);
+console.log(b);
+console.log(c);
+console.log(a.join('-'));
+console.log(b.join('-'));
+const newArr = a.map((v, i) => i);
+console.log(newArr);
+const newArr2 = b.map((v, i) => i);
+console.log(newArr2);
+
+const fakeJoin = (arr: any[], connector: string): string => {
+    let str = '';
+    for (let i = 0; i < arr.length; i += 1) {
+        if (i > 0) {
+            str += connector;
+        }
+        if (arr[i] !== undefined) {
+            str += arr[i];
+        }
+    }
+    return str;
+};
+
+console.log(fakeJoin(a, '-'));
+
+const inventory = [
+    { id: 10, title: 'The C Programming Language', author: 'K & R', available: true, category: Category.Software },
+
+    { id: 11, title: 'Code Complete', author: 'Steve McConnell', available: true, category: Category.Software },
+
+    { id: 12, title: '8-Bit Graphics with Cobol', author: 'A. B.', available: true, category: Category.Software },
+
+    { id: 13, title: 'Cool autoexec.bat Scripts!', author: 'C. D.', available: true, category: Category.Software },
+];
+
+console.log(purge(inventory));
+console.log(purge([1, 2, 3, 4, 5]));
+
+// const bookShelf = new Shelf();
+// inventory.forEach(book => bookShelf.add(book));
+// console.log(bookShelf.getFirst());
+
+fetchData('https://jsonplaceholder.typicode.com/users', callback<any>);
+
+console.log(data2);
