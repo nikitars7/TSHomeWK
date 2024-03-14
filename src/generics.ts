@@ -86,3 +86,93 @@ export function callback<T>(err: Error | null, data: T[] | null): void {
 fetchData('https://jsonplaceholder.typicode.com/users', callback<any>);
 
 console.log(data2);
+
+// new variant of shelf
+
+export type NewMagazine = {
+    title: string;
+    publisher: string;
+};
+export type Book = {
+    id: number;
+    title: string;
+    author: string;
+    available: boolean;
+    category: Category;
+};
+// bad example (DRY)
+// export class NewShelf {
+//     private magazines: NewMagazine[] = [];
+//     private books: Book[] = [];
+//     addBook(item: Book): void {
+//         if (item) {
+//             this.books.push(item);
+//         }
+//     }
+//     addMagazine(item: NewMagazine): void {
+//         if (item) {
+//             this.magazines.push(item);
+//         }
+//     }
+//     getFirstBook() {
+//         return this.books[0];
+//     }
+//     getFirstMagazine() {
+//         return this.magazines[0];
+//     }
+//     printTitleBooks(): void {
+//         const objTitles = this.books.map(obj => obj.title);
+//         console.log(objTitles);
+//     }
+//     printTitleMagazines(): void {
+//         const objTitles = this.magazines.map(obj => obj.title);
+//         console.log(objTitles);
+//     }
+//     find(id: number): Book;
+//     find(author: string): Book;
+//     find(...args: [number] | [string]): Book | undefined {
+//         const [arg] = args;
+//         if (typeof arg === 'number') {
+//             return this.books.find(item => item.id === arg);
+//         } else {
+//             return this.books.find(item => item.author === arg);
+//         }
+//     }
+// }
+
+type UnionVariant = NewMagazine | Book;
+
+export class NewShelf2 {
+    private items: UnionVariant[] = [];
+    add(item: UnionVariant): void {
+        if (item) {
+            this.items.push(item);
+        }
+    }
+    getFirst() {
+        return this.items[0];
+    }
+    printTitle(): void {
+        const objTitles = this.items.map(obj => obj.title);
+        console.log(objTitles);
+    }
+    find(id: number): UnionVariant;
+    find(author: string): UnionVariant;
+    find(...args: [number] | [string]): UnionVariant | undefined {
+        const [arg] = args;
+        if (typeof arg === 'number') {
+            return this.items.find(item => ('id' in item ? item.id === arg : undefined));
+        } else {
+            return this.items.find(item => ('author' in item ? item.author === arg : undefined));
+        }
+    }
+}
+
+const newMagazine = new NewShelf2();
+
+newMagazine.add({ title: 'Hello', publisher: 'Nikita' });
+newMagazine.add({ title: 'Hello', id: 1, author: 'Nikita', available: true, category: Category.Software });
+console.log(newMagazine.getFirst());
+newMagazine.printTitle();
+console.log(newMagazine.find(1));
+console.log(newMagazine.find('Nikita'));

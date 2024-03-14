@@ -1,7 +1,7 @@
 // showHello('greeting', 'TypeScript');
 
 import { Circle, Rectangle, Square, SquareCalculate, Squares, Triangle } from './classes';
-import { Shelf, callback, data2, fetchData, purge } from './generics';
+import { NewMagazine, NewShelf2, Shelf, callback, data2, fetchData, purge } from './generics';
 import { checkObj, checkSignature } from './indexSignatures';
 import { Area, Group, Level, School, Student } from './lesson03.3_HomeTask';
 
@@ -320,3 +320,7 @@ console.log(purge([1, 2, 3, 4, 5]));
 fetchData('https://jsonplaceholder.typicode.com/users', callback<any>);
 
 console.log(data2);
+
+// const newMagazine = new NewShelf2();
+
+// newMagazine.add({ id: 1, title: 'World', author: 'Vlad', available: true, category: 'Software' });
