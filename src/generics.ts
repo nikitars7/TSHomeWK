@@ -176,3 +176,66 @@ console.log(newMagazine.getFirst());
 newMagazine.printTitle();
 console.log(newMagazine.find(1));
 console.log(newMagazine.find('Nikita'));
+
+// трохи погрався з construstor overload
+export class NewShelf3 {
+    private items: UnionVariant[] = [];
+    title!: string;
+    publisher!: string;
+    author!: string;
+    id!: number;
+    available!: boolean;
+    category!: Category;
+    constructor(title: string, publisher: string);
+    constructor(title: string, id: number, author: string, available: boolean, category: Category);
+    constructor(...options: [string, string] | [string, number, string, boolean, Category]) {
+        if (options.length === 2) {
+            const [title, publisher] = options;
+            this.title = title;
+            this.publisher = publisher;
+        } else {
+            const [title, id, author, available, category] = options;
+            this.title = title;
+            this.author = author;
+            this.id = id;
+            this.available = available;
+            this.category = category;
+        }
+    }
+    add(item: UnionVariant): void {
+        if (item) {
+            this.items.push(item);
+        }
+    }
+    getFirst() {
+        return this.items[0];
+    }
+    printTitle(): void {
+        const objTitles = this.items.map(obj => obj.title);
+        console.log(objTitles);
+    }
+    find(id: number): UnionVariant;
+    find(author: string): UnionVariant;
+    find(...args: [number] | [string]): UnionVariant | undefined {
+        const [arg] = args;
+        if (typeof arg === 'number') {
+            return this.items.find(item => ('id' in item ? item.id === arg : undefined));
+        } else {
+            return this.items.find(item => ('author' in item ? item.author === arg : undefined));
+        }
+    }
+}
+const newShelf2 = new NewShelf3('Hello', 'Nikita');
+
+newShelf2.add({ title: newShelf2.title, publisher: newShelf2.publisher });
+newShelf2.add({
+    title: 'U dont know JS',
+    id: 22,
+    author: 'Kyle Simpson',
+    available: true,
+    category: Category.Software,
+});
+console.log(newShelf2.getFirst());
+newShelf2.printTitle();
+console.log(newShelf2.find(22));
+console.log(newShelf2.find('Kyle Simpson'));
