@@ -116,8 +116,8 @@ export class NewShelf2 {
     printTitle(): void {
         this.items.forEach(obj => console.log(obj.title));
     }
-    find(id: number): NewMagazine | Book;
-    find(author: string): NewMagazine | Book;
+    find(id: number): NewMagazine | Book | undefined;
+    find(author: string): NewMagazine | Book | undefined;
     find(searchItem: number | string): NewMagazine | Book | undefined {
         if (typeof searchItem === 'number') {
             return this.items.find(item => ('id' in item ? item.id === searchItem : undefined));
