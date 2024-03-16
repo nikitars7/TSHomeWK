@@ -100,51 +100,12 @@ export type Book = {
     available: boolean;
     category: Category;
 };
-// bad example (DRY)
-// export class NewShelf {
-//     private magazines: NewMagazine[] = [];
-//     private books: Book[] = [];
-//     addBook(item: Book): void {
-//         if (item) {
-//             this.books.push(item);
-//         }
-//     }
-//     addMagazine(item: NewMagazine): void {
-//         if (item) {
-//             this.magazines.push(item);
-//         }
-//     }
-//     getFirstBook() {
-//         return this.books[0];
-//     }
-//     getFirstMagazine() {
-//         return this.magazines[0];
-//     }
-//     printTitleBooks(): void {
-//         const objTitles = this.books.map(obj => obj.title);
-//         console.log(objTitles);
-//     }
-//     printTitleMagazines(): void {
-//         const objTitles = this.magazines.map(obj => obj.title);
-//         console.log(objTitles);
-//     }
-//     find(id: number): Book;
-//     find(author: string): Book;
-//     find(...args: [number] | [string]): Book | undefined {
-//         const [arg] = args;
-//         if (typeof arg === 'number') {
-//             return this.books.find(item => item.id === arg);
-//         } else {
-//             return this.books.find(item => item.author === arg);
-//         }
-//     }
-// }
 
-type UnionVariant = NewMagazine | Book;
+type UnionVariant = (NewMagazine | Book)[];
 
 export class NewShelf2 {
-    private items: UnionVariant[] = [];
-    add(item: UnionVariant): void {
+    private items: UnionVariant = [];
+    add(item: NewMagazine | Book): void {
         if (item) {
             this.items.push(item);
         }
@@ -153,17 +114,15 @@ export class NewShelf2 {
         return this.items[0];
     }
     printTitle(): void {
-        const objTitles = this.items.map(obj => obj.title);
-        console.log(objTitles);
+        this.items.forEach(obj => console.log(obj.title));
     }
-    find(id: number): UnionVariant;
-    find(author: string): UnionVariant;
-    find(...args: [number] | [string]): UnionVariant | undefined {
-        const [arg] = args;
-        if (typeof arg === 'number') {
-            return this.items.find(item => ('id' in item ? item.id === arg : undefined));
+    find(id: number): NewMagazine | Book;
+    find(author: string): NewMagazine | Book;
+    find(searchItem: number | string): NewMagazine | Book | undefined {
+        if (typeof searchItem === 'number') {
+            return this.items.find(item => ('id' in item ? item.id === searchItem : undefined));
         } else {
-            return this.items.find(item => ('author' in item ? item.author === arg : undefined));
+            return this.items.find(item => ('author' in item ? item.author === searchItem : undefined));
         }
     }
 }
@@ -177,65 +136,31 @@ newMagazine.printTitle();
 console.log(newMagazine.find(1));
 console.log(newMagazine.find('Nikita'));
 
-// трохи погрався з construstor overload
-export class NewShelf3 {
-    private items: UnionVariant[] = [];
-    title!: string;
-    publisher!: string;
-    author!: string;
-    id!: number;
-    available!: boolean;
-    category!: Category;
-    constructor(title: string, publisher: string);
-    constructor(title: string, id: number, author: string, available: boolean, category: Category);
-    constructor(...options: [string, string] | [string, number, string, boolean, Category]) {
-        if (options.length === 2) {
-            const [title, publisher] = options;
-            this.title = title;
-            this.publisher = publisher;
-        } else {
-            const [title, id, author, available, category] = options;
-            this.title = title;
-            this.author = author;
-            this.id = id;
-            this.available = available;
-            this.category = category;
-        }
-    }
-    add(item: UnionVariant): void {
+interface TField {
+    id: number;
+    title: string;
+    author: string;
+}
+export class ShelfGen<T extends TField> {
+    private items: T[] = [];
+    add(item: T): void {
         if (item) {
             this.items.push(item);
         }
     }
-    getFirst() {
+    getFirst(): T {
         return this.items[0];
     }
-    printTitle(): void {
-        const objTitles = this.items.map(obj => obj.title);
-        console.log(objTitles);
+    printTitles(): void {
+        this.items.forEach((obj: T) => console.log(obj.title));
     }
-    find(id: number): UnionVariant;
-    find(author: string): UnionVariant;
-    find(...args: [number] | [string]): UnionVariant | undefined {
-        const [arg] = args;
-        if (typeof arg === 'number') {
-            return this.items.find(item => ('id' in item ? item.id === arg : undefined));
+    find(id: number): T | undefined;
+    find(author: string): T | undefined;
+    find(searchItem: number | string): T | undefined {
+        if (typeof searchItem === 'number') {
+            return this.items.find(item => item.id === searchItem);
         } else {
-            return this.items.find(item => ('author' in item ? item.author === arg : undefined));
+            return this.items.find(item => item.author === searchItem);
         }
     }
 }
-const newShelf2 = new NewShelf3('Hello', 'Nikita');
-
-newShelf2.add({ title: newShelf2.title, publisher: newShelf2.publisher });
-newShelf2.add({
-    title: 'U dont know JS',
-    id: 22,
-    author: 'Kyle Simpson',
-    available: true,
-    category: Category.Software,
-});
-console.log(newShelf2.getFirst());
-newShelf2.printTitle();
-console.log(newShelf2.find(22));
-console.log(newShelf2.find('Kyle Simpson'));
