@@ -127,3 +127,13 @@ export const user: ObjectToPropertyDescriptor<User2> = {
         },
     },
 };
+
+type ObjectToPropertyDescriptor2<T> = {
+    [K in keyof T]: PropertyDescriptor;
+};
+
+const newUser = {
+    name: 'john',
+    age: 30,
+};
+type newUserType = ObjectToPropertyDescriptor2<typeof newUser>;
