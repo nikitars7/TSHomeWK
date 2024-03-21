@@ -48,17 +48,17 @@ interface OptionalUser {
     };
 }
 
-const optionalUserData: DeepRequireReadonly<OptionalUser> = {
-    name: 'John',
-    address: {
-        // age is missing
-        street: 'unknown',
-        city: 'nowhere',
-        region: {
-            name: 'guess',
-        },
-    },
-};
+// const optionalUserData: DeepRequireReadonly<OptionalUser> = {
+//     name: 'John',
+//     address: {
+//         // age is missing
+//         street: 'unknown',
+//         city: 'nowhere',
+//         region: {
+//             name: 'guess',
+//         },
+//     },
+// };
 // optionalUserData.age = 14  // error
 
 // 3. Вам потрібно сворити тип `UpperCaseKeys`, який буде приводити всі ключі до верхнього регістру.
@@ -75,43 +75,55 @@ type UpperCaseKeys<T> = {
     [K in keyof T as Uppercase<string & K>]: T[K] extends Record<string, unknown> ? UpperCaseKeys<T[K]> : T[K];
 };
 
-const userUpperCase: UpperCaseKeys<UserUpperCase> = {
-    name: 'john',
-    username: 'john_123',
-    fullname: 'johnathan',
-    ADDRESS: {
-        CITY: 'fff',
-    },
-};
+// const userUpperCase: UpperCaseKeys<UserUpperCase> = {
+//     name: 'john',
+//     username: 'john_123',
+//     fullname: 'johnathan',
+//     ADDRESS: {
+//         CITY: 'fff',
+//     },
+// };
 
 // 4.Створіть тип `ObjectToPropertyDescriptor`, який перетворює звичайний обʼєкт на обʼєкт де кожне `value` є дескриптором.
-interface PropertyDescriptor {
+interface PropertyDescriptorGeneric<T> {
     configurable?: boolean;
     enumerable?: boolean;
-    value?: any;
+    value: T;
     writable?: boolean;
-    get?(): any;
-    set?(v: any): void;
+    get(): any;
+    set(v: any): void;
 }
 type ObjectToPropertyDescriptor<T> = {
-    [K in keyof T]: PropertyDescriptor;
+    [K in keyof T]: PropertyDescriptorGeneric<T[K]>;
 };
 
 interface User2 {
     name: string;
     age: number;
 }
-const user: ObjectToPropertyDescriptor<User2> = {
+export const user: ObjectToPropertyDescriptor<User2> = {
     name: {
         configurable: false,
         enumerable: false,
         value: 'John',
         writable: true,
+        get() {
+            return this.value;
+        },
+        set(v) {
+            this.value = v;
+        },
     },
     age: {
         configurable: false,
         enumerable: false,
         value: 25,
         writable: true,
+        get() {
+            return this.value;
+        },
+        set(v) {
+            this.value = v;
+        },
     },
 };

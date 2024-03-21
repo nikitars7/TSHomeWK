@@ -4,6 +4,7 @@ import { Circle, Rectangle, Square, SquareCalculate, Squares, Triangle } from '.
 import { NewMagazine, NewShelf2, Shelf, callback, data2, fetchData, purge } from './generics';
 import { checkObj, checkSignature } from './indexSignatures';
 import { Area, Group, Level, School, Student } from './lesson03.3_HomeTask';
+import { user } from './mappedTypes';
 // function showHello(divName: string, name: string) {
 //     const elt = document.getElementById(divName);
 //     elt!.innerText = `Hello from ${name}`;
