@@ -72,7 +72,7 @@ type UserUpperCase = {
     };
 };
 type UpperCaseKeys<T> = {
-    [K in keyof T & string as Uppercase<K>]: T[K] extends Record<string, unknown> ? UpperCaseKeys<T[K]> : T[K];
+    [K in keyof T as Uppercase<string & K>]: T[K] extends Record<string, unknown> ? UpperCaseKeys<T[K]> : T[K];
 };
 
 const userUpperCase: UpperCaseKeys<UserUpperCase> = {
@@ -85,35 +85,33 @@ const userUpperCase: UpperCaseKeys<UserUpperCase> = {
 };
 
 // 4.Створіть тип `ObjectToPropertyDescriptor`, який перетворює звичайний обʼєкт на обʼєкт де кожне `value` є дескриптором.
+interface PropertyDescriptor {
+    configurable?: boolean;
+    enumerable?: boolean;
+    value?: any;
+    writable?: boolean;
+    get?(): any;
+    set?(v: any): void;
+}
+type ObjectToPropertyDescriptor<T> = {
+    [K in keyof T]: PropertyDescriptor;
+};
 
-type UserDescriptor = {
+interface User2 {
     name: string;
     age: number;
+}
+const user: ObjectToPropertyDescriptor<User2> = {
+    name: {
+        configurable: false,
+        enumerable: false,
+        value: 'John',
+        writable: true,
+    },
+    age: {
+        configurable: false,
+        enumerable: false,
+        value: 25,
+        writable: true,
+    },
 };
-const user2 = {
-    name: 'Vasya',
-    age: 45,
-};
-const descriptor = Object.getOwnPropertyDescriptors(user2);
-
-// type User 2= {
-//    name: string;
-//    age:number;
-//  }
-//  type ToGetter<T extends string> = `get${Capitalize<T>}`;
-
-//  type Getters<T> = {
-//    [K in keyof T & string as ToGetter<K>] : () => T[K];
-//  }
-//  type T = Getters<User>
-
-type ObjectToPropertyDescriptor<T> = {
-    [property in keyof T ]: T[property];
-};
-
-const user3: ObjectToPropertyDescriptor<UserDescriptor> = {
-    name: 'Oleh',
-    age: 24,
-};
-
-user3.
