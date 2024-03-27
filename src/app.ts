@@ -5,6 +5,7 @@ import { NewMagazine, NewShelf2, Shelf, callback, data2, fetchData, purge } from
 import { checkObj, checkSignature } from './indexSignatures';
 import { Area, Group, Level, School, Student } from './lesson03.3_HomeTask';
 import { user } from './mappedTypes';
+import { filmsList, findFilmByQuery } from './typesInfer';
 // function showHello(divName: string, name: string) {
 //     const elt = document.getElementById(divName);
 //     elt!.innerText = `Hello from ${name}`;
@@ -324,3 +325,8 @@ console.log(data2);
 // const newMagazine = new NewShelf2();
 
 // newMagazine.add({ id: 1, title: 'World', author: 'Vlad', available: true, category: 'Software' });
+console.log(filmsList.applySearchValue('year'));
+console.log(filmsList);
+console.log(filmsList.applyFiltersValue([{ filter: 4, filterTo: 9, type: 'range' }]));
+console.log(filmsList);
+console.log(filmsList.applyFiltersValue([{ filter: 6, filterTo: 9, type: 'range' }]));

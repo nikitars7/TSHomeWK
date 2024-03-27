@@ -94,8 +94,8 @@ type OptionalProps<T extends object> = {
 type BookRequiredProps = RequiredProps<Book>;
 type BookOptionalProps = OptionalProps<Book>;
 
-type BookRequiredProps2 = RequiredProps<string>;
-type BookOptionalProps2 = OptionalProps<boolean>;
+// type BookRequiredProps2 = RequiredProps<string>;
+// type BookOptionalProps2 = OptionalProps<boolean>;
 
 // 13. Створіть утиліту RemoveProps <T extends object, TProps extends keyof T>, яка видаляє властивості TProps з переданого типу T.
 
@@ -122,8 +122,8 @@ type Author2 = {
 type BookRequiredPropsType = RemoveProps<Book, keyof BookOptionalProps>;
 type BookOptionalPropsType = RemoveProps<Book, keyof BookRequiredProps>;
 
-type BookRequiredPropsType2 = RemoveProps<Author2, keyof BookRequiredProps>;
-type BookOptionalPropsType2 = RemoveProps<Author2, keyof BookOptionalProps>;
+// type BookRequiredPropsType2 = RemoveProps<Author2, keyof BookRequiredProps>;
+// type BookOptionalPropsType2 = RemoveProps<Author2, keyof BookOptionalProps>;
 
 // 15. Створіть функцію update(), яка приймає один параметр типу boolean. Якщо значення аргументу true, функція повинна повертати значення типу string. Якщо значення аргументу false, функція повинна повертати значення типу number.
 
