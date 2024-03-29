@@ -1,6 +1,7 @@
 // showHello('greeting', 'TypeScript');
 
 import { Circle, Rectangle, Square, SquareCalculate, Squares, Triangle } from './classes';
+import { Debounced, Memoization } from './decorators';
 import { NewMagazine, NewShelf2, Shelf, callback, data2, fetchData, purge } from './generics';
 import { checkObj, checkSignature } from './indexSignatures';
 import { Area, Group, Level, School, Student } from './lesson03.3_HomeTask';
@@ -330,3 +331,14 @@ console.log(filmsList);
 console.log(filmsList.applyFiltersValue([{ filter: 4, filterTo: 9, type: 'range' }]));
 console.log(filmsList);
 console.log(filmsList.applyFiltersValue([{ filter: 6, filterTo: 9, type: 'range' }]));
+
+const memoize = new Memoization();
+console.log(memoize.multipleByTwo(5));
+console.log(memoize.multipleByTwo(5));
+console.log(memoize.multipleByTwo(10));
+console.log(memoize.multipleByTwo(10));
+
+const debounce = new Debounced();
+debounce.logAfterPause();
+debounce.logAfterPause();
+debounce.readyToStart();
