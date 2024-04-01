@@ -1,118 +1,127 @@
-// interface INote {
-//     noteDidUpdate(): void;
-//     noteIsCompleted(): void;
-//     updateAbout(about: string[]): void;
-// }
-// abstract class ExampleOfNote implements INote {
-//     readonly id: number;
-//     isCompleted: boolean;
-//     private readonly createdAt: number;
-//     updatedAt: number | null;
-//     constructor(readonly name: string, protected about: string[]) {
-//         this.id = Math.round(Math.random() * 100);
-//         this.isCompleted = false;
-//         this.createdAt = Date.now();
-//         this.updatedAt = null;
-//     }
-//     noteDidUpdate(): void {
-//         this.updatedAt = Date.now();
-//     }
-//     noteIsCompleted(): void {
-//         this.isCompleted = true;
-//     }
-//     updateAbout(about: string[]): void {
-//         this.about = [...about];
-//     }
-// }
-// export class BasicNote extends ExampleOfNote {
-//     constructor(name: string, about: string[]) {
-//         super(name, about);
-//     }
-// }
-// export class AdvancedNote extends ExampleOfNote {
-//     constructor(name: string, about: string[]) {
-//         super(name, about);
-//     }
-// }
+interface INote {
+    noteDidUpdate(): void;
+    noteIsCompleted(): void;
+    updateAbout(about: string[]): void;
+}
+abstract class ExampleOfNote implements INote {
+    protected readonly id: number;
+    protected isCompleted: boolean;
+    private readonly createdAt: Date;
+    protected updatedAt: Date | null;
+    constructor(readonly name: string, protected content: string[]) {
+        this.id = Math.round(Math.random() * 100);
+        this.isCompleted = false;
+        this.createdAt = new Date();
+        this.updatedAt = null;
+    }
+    noteDidUpdate(): void {
+        this.updatedAt = new Date();
+    }
+    noteIsCompleted(): void {
+        this.isCompleted = true;
+    }
+    updateAbout(about: string[]): void {
+        this.content = [...about];
+    }
+    get _id(): number {
+        return this.id;
+    }
+    get _isCompleted(): boolean {
+        return this.isCompleted;
+    }
+    get _content(): string[] {
+        return this.content;
+    }
+    get _createdAt(): Date {
+        return this.createdAt;
+    }
+}
+export class BasicNote extends ExampleOfNote {
+    constructor(name: string, about: string[]) {
+        super(name, about);
+    }
+}
+export class AdvancedNote extends ExampleOfNote {
+    constructor(name: string, about: string[]) {
+        super(name, about);
+    }
+}
 
-// export class NoteList {
-//     private notes: (BasicNote | AdvancedNote)[] = [];
+export class NoteList {
+    private notes: (BasicNote | AdvancedNote)[] = [];
 
-//     addNewNote(note: BasicNote | AdvancedNote): void {
-//         this.notes.push(note);
-//     }
-//     removeSomeNote(id: number): void {
-//         this.notes = this.notes.filter(note => note.id !== id);
-//     }
-//     updateNote(id: number, about: string[]): void {
-//         this.notes.filter(note => {
-//             if (note.id === id && note instanceof BasicNote) {
-//                 return { ...note, about: note.updateAbout(about), updatedAt: note.noteDidUpdate() };
-//             } else if (note.id === id && note instanceof AdvancedNote) {
-//                 const answer = confirm('Are you really want to update this note?');
-//                 if (answer) {
-//                     return { ...note, about: note.updateAbout(about), updatedAt: note.noteDidUpdate() };
-//                 }
-//                 return note;
-//             }
-//             return note;
-//         });
-//     }
-// searchNotes(query: string): (BasicNote | AdvancedNote)[] {
-//     return this.notes.filter(note => note.name.includes(query) || note.about.includes(query));
-// }
-// sortNotesByStatus(): void {
-//     this.notes.sort((a, b) => a.isCompleted - b.isCompleted);
-// }
+    addNewNote(note: BasicNote | AdvancedNote): void {
+        this.notes.push(note);
+    }
+    removeSomeNote(id: number): void {
+        this.notes = this.notes.filter(note => note._id !== id);
+    }
+    updateNote(id: number, about: string[]): void {
+        this.notes.filter(note => {
+            if (note._id === id && note instanceof BasicNote) {
+                return { ...note, about: note.updateAbout(about), updatedAt: note.noteDidUpdate() };
+            } else if (note._id === id && note instanceof AdvancedNote) {
+                const answer = confirm('Are you really want to update this note?');
+                if (answer) {
+                    return { ...note, about: note.updateAbout(about), updatedAt: note.noteDidUpdate() };
+                }
+                return note;
+            }
+            return note;
+        });
+    }
+    searchNotes(query: string): (BasicNote | AdvancedNote)[] {
+        return this.notes.filter(note => note.name.includes(query) || note._content.includes(query));
+    }
 
-// sortNotesByCreatedAt(): void {
-//     this.notes.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
-// }
-// getFullInfo(name: string): BasicNote | AdvancedNote | undefined;
-// getFullInfo(id: number): BasicNote | AdvancedNote | undefined;
-// getFullInfo(about: string[]): BasicNote | AdvancedNote | undefined;
-// getFullInfo(query: string | number | string[]) {
-//     if (typeof query === 'number') {
-//         const id = query;
-//         const someNote = this.notes.find(note => note.id === id);
-//         if (!someNote) {
-//             throw new Error('There is no any note with that id');
-//         }
-//         return someNote;
-//     } else if (typeof query === 'string') {
-//         const name = query;
-//         const someNote = this.notes.find(note => note.name === name);
-//         if (!someNote) {
-//             throw new Error('There is no any note with that id');
-//         }
-//         return someNote;
-//     }else{
-//         return this.notes.filter(note => {
-//             return query.every(item => note.)
-//         })
-//     }
-// }
-//     getAllNotes(): void {
-//         console.log(this.notes);
-//     }
-//     getInfoAboutNotes(): string {
-//         let toBeCompleted = 0;
-//         this.notes.forEach(note => (note.isCompleted === false ? toBeCompleted++ : note));
-//         let result =
-//             this.notes.length > 1
-//                 ? `There are ${this.notes.length} notes , and ${toBeCompleted} notes is not completed yet`
-//                 : `There is ${this.notes.length} note , and ${toBeCompleted} note is not completed yet`;
-//         return result;
-//     }
-//     isCompleted(id: number): void {
-//         this.notes = this.notes.filter(note => {
-//             if (note.id === id) {
-//                 return { ...note, isCompleted: note.noteIsCompleted() };
-//             }
-//             return note;
-//         });
-//     }
-// }
+    sortNotesByCreatedAt(): void {
+        this.notes.sort((a, b) => a._createdAt.getTime() - b._createdAt.getTime());
+    }
+    getFullInfo(name: string): BasicNote | AdvancedNote | undefined;
+    getFullInfo(id: number): BasicNote | AdvancedNote | undefined;
+    getFullInfo(content: string[]): BasicNote | AdvancedNote | undefined;
+    getFullInfo(query: string | number | string[]): BasicNote | AdvancedNote | undefined {
+        if (typeof query === 'number') {
+            const id = query;
+            const someNote = this.notes.find(note => note._id === id);
+            if (!someNote) {
+                throw new Error('There is no any note with that id');
+            }
+            return someNote;
+        } else if (typeof query === 'string') {
+            const name = query;
+            const someNote = this.notes.find(note => note.name === name);
+            if (!someNote) {
+                throw new Error('There is no any note with that id');
+            }
+            return someNote;
+        } else {
+            return this.notes.find(note => {
+                return query.every(item => note._content.includes(item));
+            });
+        }
+    }
+    getAllNotes(): void {
+        console.log(this.notes);
+    }
+    getInfoAboutNotes(): string {
+        let toBeCompleted = 0;
+        this.notes.forEach(note => (note._isCompleted === false ? toBeCompleted++ : note));
+        let result =
+            this.notes.length > 1
+                ? `There are ${this.notes.length} notes , and ${toBeCompleted} notes is not completed yet`
+                : `There is ${this.notes.length} note , and ${toBeCompleted} note is not completed yet`;
+        return result;
+    }
+    isCompleted(id: number): void {
+        this.notes = this.notes.filter(note => {
+            if (note._id === id) {
+                return { ...note, isCompleted: note.noteIsCompleted() };
+            }
+            return note;
+        });
+    }
+}
 
 /* eslint no-underscore-dangle: 0 */
 export class Note {
