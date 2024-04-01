@@ -6,6 +6,8 @@ import { NewMagazine, NewShelf2, Shelf, callback, data2, fetchData, purge } from
 import { checkObj, checkSignature } from './indexSignatures';
 import { Area, Group, Level, School, Student } from './lesson03.3_HomeTask';
 import { user } from './mappedTypes';
+import { AdvancedNote, BasicNote, Note, NoteList, TodoList } from './oop';
+import { NoteList5 } from './oop2';
 import { filmsList, findFilmByQuery } from './typesInfer';
 // function showHello(divName: string, name: string) {
 //     const elt = document.getElementById(divName);
@@ -342,3 +344,29 @@ const debounce = new Debounced();
 debounce.logAfterPause();
 debounce.logAfterPause();
 debounce.readyToStart();
+
+// const basicNote = new BasicNote('OOP', 'This is all about OOP');
+// const advancedNote = new AdvancedNote('SOLID', 'This is all about SOLID');
+
+// const notesList = new NoteList();
+// console.log(basicNote);
+// notesList.addNewNote(basicNote);
+// notesList.addNewNote(advancedNote);
+// console.log(notesList.getFullInfo(basicNote.id));
+// notesList.isCompleted(basicNote.id);
+// notesList.updateNote(advancedNote.id, 'Updated SOLID pripciples');
+// notesList.getAllNotes();
+// notesList.removeSomeNote(basicNote.id);
+// notesList.getAllNotes();
+// console.log(notesList.getInfoAboutNotes());
+
+const todoList = new TodoList();
+
+const note1 = new Note('ООП', 'Все про ООП', 'default');
+todoList.addNote(note1);
+
+todoList.editNoteContent(note1.id, 'All about OOP');
+console.log(todoList.getAllNotes());
+todoList.getNoteById(note1.id);
+todoList.setNoteStatus(note1.id, 'completed');
+console.log(todoList.getNoteById(note1.id));

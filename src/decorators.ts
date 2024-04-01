@@ -40,6 +40,7 @@ export class Memoization {
 
 function WithDebounce(t: number = 0) {
     let timer: ReturnType<typeof setTimeout>;
+
     return function <T, A extends any[], R>(
         originalMethod: (...args: A) => R,
         context: ClassMethodDecoratorContext<T, (...args: A) => R>,
@@ -56,6 +57,9 @@ function WithDebounce(t: number = 0) {
         return replaceWithValue;
     };
 }
+
+// Попробовал с confirm
+
 function WithConfirmation<T, A extends any[], R>(
     originalMethod: (...args: A) => R,
     context: ClassMethodDecoratorContext<T, (...args: A) => R>,
