@@ -310,7 +310,11 @@ export class UserOfMessageSystem implements IUser {
         }
     }
 }
-const newMessage = new TextMessage('Hello World');
+const newTextMessage = new TextMessage('Hello World');
+const newVideoMessage = new TextMessage('video');
+const newAudioMessage = new TextMessage('audio');
 const messageSystem = new MessageSystem();
 const userMessage = new UserOfMessageSystem('Igor');
-console.log(userMessage.sendMessage(newMessage, messageSystem));
+userMessage.sendMessage(newTextMessage, messageSystem);
+userMessage.sendMessage(newVideoMessage, messageSystem);
+userMessage.sendMessage(newAudioMessage, messageSystem);
