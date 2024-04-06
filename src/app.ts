@@ -7,6 +7,20 @@ import { checkObj, checkSignature } from './indexSignatures';
 import { Area, Group, Level, School, Student } from './lesson03.3_HomeTask';
 import { user } from './mappedTypes';
 import { AdvancedNote, BasicNote, Note, NoteList, TodoList } from './oop';
+import {
+    BookType,
+    MessageSystem,
+    ShapesEnum,
+    TextMessage,
+    UserOfMessageSystem,
+    basefigure,
+    circle2,
+    circle3,
+    library,
+    square2,
+    toScaleFigures,
+    user5,
+} from './solid';
 import { filmsList, findFilmByQuery } from './typesInfer';
 // function showHello(divName: string, name: string) {
 //     const elt = document.getElementById(divName);
@@ -327,48 +341,63 @@ console.log(data2);
 // const newMagazine = new NewShelf2();
 
 // newMagazine.add({ id: 1, title: 'World', author: 'Vlad', available: true, category: 'Software' });
-console.log(filmsList.applySearchValue('year'));
-console.log(filmsList);
-console.log(filmsList.applyFiltersValue([{ filter: 4, filterTo: 9, type: 'range' }]));
-console.log(filmsList);
-console.log(filmsList.applyFiltersValue([{ filter: 6, filterTo: 9, type: 'range' }]));
+// console.log(filmsList.applySearchValue('year'));
+// console.log(filmsList);
+// console.log(filmsList.applyFiltersValue([{ filter: 4, filterTo: 9, type: 'range' }]));
+// console.log(filmsList);
+// console.log(filmsList.applyFiltersValue([{ filter: 6, filterTo: 9, type: 'range' }]));
 
-const memoize = new Memoization();
-console.log(memoize.multipleByTwo(5));
-console.log(memoize.multipleByTwo(5));
-console.log(memoize.multipleByTwo(10));
-console.log(memoize.multipleByTwo(10));
+// const memoize = new Memoization();
+// console.log(memoize.multipleByTwo(5));
+// console.log(memoize.multipleByTwo(5));
+// console.log(memoize.multipleByTwo(10));
+// console.log(memoize.multipleByTwo(10));
 
-const debounce = new Debounced();
-debounce.logAfterPause();
-debounce.logAfterPause();
-debounce.readyToStart();
-/* eslint no-underscore-dangle: 0 */
-const basicNote = new BasicNote('OOP', ['This is all about OOP']);
-const advancedNote = new AdvancedNote('SOLID', ['This is all about SOLID']);
+// const debounce = new Debounced();
+// debounce.logAfterPause();
+// debounce.logAfterPause();
+// debounce.readyToStart();
 
-const notesList = new NoteList();
-notesList.addNewNote(basicNote);
-notesList.addNewNote(advancedNote);
-console.log(notesList.getFullInfo(basicNote._id));
-// notesList.isCompleted(basicNote._id);
-notesList.updateNote(advancedNote._id, ['Updated SOLID pripciples']);
-notesList.getAllNotes();
-notesList.removeSomeNote(basicNote._id);
-notesList.getAllNotes();
-console.log(notesList.getInfoAboutNotes());
+// /* eslint no-underscore-dangle: 0 */
+// const basicNote = new BasicNote('OOP', ['This is all about OOP']);
+// const advancedNote = new AdvancedNote('SOLID', ['This is all about SOLID']);
 
-const todoList = new TodoList();
-const note1 = new Note('ООП', 'Все про ООП', 'default');
-const note2 = new Note('SOLID', 'Все про Solid', 'completed');
-const note3 = new Note('Jest', 'Все про Jest', 'default');
-todoList.addNote(note1);
-todoList.addNote(note3);
-todoList.addNote(note2);
-console.log(todoList.getNoteById(note1.id));
-todoList.setNoteStatus(note1.id, 'confirmationRequired');
-todoList.editNoteContent(note1.id, 'All about OOP');
-console.log(todoList.getNoteById(note1.id));
-console.log(todoList.getAllNotes());
-console.log(todoList.searchNotes('ООП'));
-console.log(todoList.sortNotesByCreatedDate());
+// const notesList = new NoteList();
+// notesList.addNewNote(basicNote);
+// notesList.addNewNote(advancedNote);
+// console.log(notesList.getFullInfo(basicNote._id));
+// // notesList.isCompleted(basicNote._id);
+// notesList.updateNote(advancedNote._id, ['Updated SOLID pripciples']);
+// notesList.getAllNotes();
+// notesList.removeSomeNote(basicNote._id);
+// notesList.getAllNotes();
+// console.log(notesList.getInfoAboutNotes());
+
+// const todoList = new TodoList();
+// const note1 = new Note('ООП', 'Все про ООП', 'default');
+// const note2 = new Note('SOLID', 'Все про Solid', 'completed');
+// const note3 = new Note('Jest', 'Все про Jest', 'default');
+// todoList.addNote(note1);
+// todoList.addNote(note3);
+// todoList.addNote(note2);
+// console.log(todoList.getNoteById(note1.id));
+// todoList.setNoteStatus(note1.id, 'confirmationRequired');
+// todoList.editNoteContent(note1.id, 'All about OOP');
+// console.log(todoList.getNoteById(note1.id));
+// console.log(todoList.getAllNotes());
+// console.log(todoList.searchNotes('ООП'));
+// console.log(todoList.sortNotesByCreatedDate());
+
+// console.log(user5);
+// console.log(library.visitor);
+
+circle2.drawing();
+
+// toScaleFigures(basefigure, 11);
+// toScaleFigures(square2, 1.3);
+// toScaleFigures(circle3, 1.5);
+
+const newMessage = new TextMessage('Hello World');
+const messageSystem = new MessageSystem();
+const userMessage = new UserOfMessageSystem('Igor');
+console.log(userMessage.sendMessage(newMessage, messageSystem));

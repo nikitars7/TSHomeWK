@@ -48,27 +48,27 @@ export class AdvancedNote extends ExampleOfNote {
 }
 
 export class NoteList {
-    private notes: (BasicNote | AdvancedNote)[] = [];
+    private notes: ExampleOfNote[] = [];
 
-    addNewNote(note: BasicNote | AdvancedNote): void {
-        this.notes.push(note);
+    addNewNote(note: ExampleOfNote): void {
+        this.notes = [...this.notes, note];
     }
     removeSomeNote(id: number): void {
         this.notes = this.notes.filter(note => note._id !== id);
     }
     updateNote(id: number, about: string[]): void {
-        this.notes.filter(note => {
-            if (note._id === id && note instanceof BasicNote) {
-                return { ...note, about: note.updateAbout(about), updatedAt: note.noteDidUpdate() };
-            } else if (note._id === id && note instanceof AdvancedNote) {
-                const answer = confirm('Are you really want to update this note?');
-                if (answer) {
-                    return { ...note, about: note.updateAbout(about), updatedAt: note.noteDidUpdate() };
-                }
-                return note;
-            }
-            return note;
-        });
+        // this.notes = this.notes.map(note => {
+        //     if (note._id === id && note instanceof BasicNote) {
+        //         return { ...note, about: note.updateAbout(about), updatedAt: note.noteDidUpdate() };
+        //     } else if (note._id === id && note instanceof AdvancedNote) {
+        //         const answer = confirm('Are you really want to update this note?');
+        //         if (answer) {
+        //             return { ...note, about: note.updateAbout(about), updatedAt: note.noteDidUpdate() };
+        //         }
+        //         return note;
+        //     }
+        //     return note;
+        // });
     }
     searchNotes(query: string): (BasicNote | AdvancedNote)[] {
         return this.notes.filter(note => note.name.includes(query) || note._content.includes(query));
