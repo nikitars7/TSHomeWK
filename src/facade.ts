@@ -61,8 +61,8 @@ interface IPlayer {
 class Player implements IPlayer {
     private readonly media: Media;
     private currentMedia!: string;
-    constructor() {
-        this.media = new Media();
+    constructor(media?: Media) {
+        this.media = media || new Media();
     }
     play(name: string): void {
         let media = this.media.findMedia(name);
@@ -109,8 +109,12 @@ class Player implements IPlayer {
         }
     }
 }
+const media = new Media();
+media.addMedia(new AudioFile('unknown', '', AudioType.MP3));
+export const player2 = new Player(media);
 
 export const player = new Player();
+
 player.addAudio('Wind of Change');
 player.addAudio('Not Afraid');
 player.addAudio('Beautiful');
