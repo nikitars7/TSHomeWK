@@ -2,6 +2,7 @@
 
 import { Circle, Rectangle, Square, SquareCalculate, Squares, Triangle } from './classes';
 import { Debounced, Memoization } from './decorators';
+import { player } from './facade';
 import { NewMagazine, NewShelf2, Shelf, callback, data2, fetchData, purge } from './generics';
 import { checkObj, checkSignature } from './indexSignatures';
 import { Area, Group, Level, School, Student } from './lesson03.3_HomeTask';
@@ -401,3 +402,17 @@ const newMessage = new TextMessage('Hello World');
 const messageSystem = new MessageSystem();
 const userMessage = new UserOfMessageSystem('Igor');
 console.log(userMessage.sendMessage(newMessage, messageSystem));
+
+player.addAudio('Wind of Change');
+player.addAudio('Not Afraid');
+player.addAudio('Beautiful');
+player.addVideo('something');
+player.play('Not Afraid');
+player.stop();
+player.next();
+player.next();
+player.next();
+player.prev();
+player.prev();
+player.prev();
+player.prev();
