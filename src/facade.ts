@@ -111,8 +111,16 @@ class Player implements IPlayer {
 }
 
 export const player = new Player();
-// player.addAudio('Wind of Change');
-// player.addAudio('Not Afraid');
-// player.addVideo('something');
-// player.play('Not Afraid');
-// player.stop();
+player.addAudio('Wind of Change');
+player.addAudio('Not Afraid');
+player.addAudio('Beautiful');
+player.addVideo('something');
+player.play('Not Afraid');
+player.stop();
+player.next();
+player.next();
+player.next();
+player.prev();
+player.prev();
+player.prev();
+player.prev();
