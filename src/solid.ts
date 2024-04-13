@@ -37,7 +37,7 @@ type UserName = {
 };
 
 class User {
-    private preferredBooks!: Book | undefined;
+    private preferredBooks!: Book;
     private readonly fullname: UserName;
     constructor(fullName: UserName) {
         this.fullname = fullName;
@@ -47,14 +47,14 @@ class User {
         this.preferredBooks = preferredBooks;
     }
     addPreferredBook(book: IBookLibrary): void {
-        if (this.preferredBooks === undefined) {
+        if (!this.preferredBooks) {
             throw new Error('Error occured , maybe you didnt create a list of preferred Books');
         } else {
             this.preferredBooks?.addBook(book);
         }
     }
     removePreferredBook(title: string): void {
-        if (this.preferredBooks === undefined) {
+        if (!this.preferredBooks) {
             throw new Error('Error occured , maybe you didnt create a list of preferred Books');
         } else {
             this.preferredBooks?.removeBook(title);
@@ -63,13 +63,13 @@ class User {
 }
 
 class Library {
-    private libraryVisitor!: User | undefined;
+    private libraryVisitor!: User;
     constructor(private readonly name: string, private readonly location: string) {}
     createLibraryVisitor(user: User) {
         this.libraryVisitor = user;
     }
     get visitor(): User {
-        if (this.libraryVisitor !== undefined) return this.libraryVisitor;
+        if (this.libraryVisitor) return this.libraryVisitor;
         else {
             throw new Error('No one user exists');
         }
