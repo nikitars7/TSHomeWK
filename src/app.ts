@@ -8,6 +8,7 @@ import { checkObj, checkSignature } from './indexSignatures';
 import { Area, Group, Level, School, Student } from './lesson03.3_HomeTask';
 import { user } from './mappedTypes';
 import { AdvancedNote, BasicNote, Note, NoteList, TodoList } from './oop';
+import { ATB, CarsObserver, FoodObserver, Volkswagen, payment } from './patterns';
 import {
     BookType,
     MessageSystem,
@@ -415,3 +416,28 @@ console.log(userMessage.sendMessage(newMessage, messageSystem));
 // player.prev();
 // player.prev();
 // player.prev();
+
+// payment.executePayment(10000);
+
+const volkswagen = new Volkswagen();
+const atb = new ATB();
+
+const carsobserver1 = new CarsObserver();
+const carsobserver2 = new CarsObserver();
+
+const foodsobserver1 = new FoodObserver();
+const foodsobserver2 = new FoodObserver();
+
+volkswagen.subscribe(carsobserver1);
+volkswagen.subscribe(carsobserver2);
+volkswagen.updateInfo('New cars have arrived');
+volkswagen.unsubscribe(carsobserver2);
+volkswagen.updateInfo('Introducing the brand new model');
+
+atb.subscribe(foodsobserver1);
+atb.subscribe(foodsobserver2);
+
+atb.updateInfo('We have a great sale , come and find something that you need');
+atb.unsubscribe(foodsobserver1);
+
+atb.updateInfo('Fish, meat and so on on sale');
