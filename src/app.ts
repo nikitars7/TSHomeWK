@@ -1,5 +1,6 @@
 // showHello('greeting', 'TypeScript');
 
+import { Ingredients, Manager, PizzaType, Sauses, Shape, Size, buildCustomPizza, buildPizza } from './builder';
 import { Circle, Rectangle, Square, SquareCalculate, Squares, Triangle } from './classes';
 import { Debounced, Memoization } from './decorators';
 import { player, player2 } from './facade';
@@ -419,25 +420,9 @@ console.log(userMessage.sendMessage(newMessage, messageSystem));
 
 // payment.executePayment(10000);
 
-const volkswagen = new Volkswagen();
-const atb = new ATB();
-
-const carsobserver1 = new CarsObserver();
-const carsobserver2 = new CarsObserver();
-
-const foodsobserver1 = new FoodObserver();
-const foodsobserver2 = new FoodObserver();
-
-volkswagen.subscribe(carsobserver1);
-volkswagen.subscribe(carsobserver2);
-volkswagen.updateInfo('New cars have arrived');
-volkswagen.unsubscribe(carsobserver2);
-volkswagen.updateInfo('Introducing the brand new model');
-
-atb.subscribe(foodsobserver1);
-atb.subscribe(foodsobserver2);
-
-atb.updateInfo('We have a great sale , come and find something that you need');
-atb.unsubscribe(foodsobserver1);
-
-atb.updateInfo('Fish, meat and so on on sale');
+const pizza = buildCustomPizza(Size.LARGE, Shape.SQUARE, Sauses.WhitSause, Ingredients.Cheese, Ingredients.Chicken);
+console.log(pizza.toString());
+const chickenPizza = buildPizza(Size.SMALL, Shape.CIRCLE, PizzaType.Chicken);
+console.log(chickenPizza.toString());
+const pepperoniPizza = buildPizza(Size.LARGE, Shape.SQUARE, PizzaType.Pepperoni);
+console.log(pepperoniPizza.toString());
