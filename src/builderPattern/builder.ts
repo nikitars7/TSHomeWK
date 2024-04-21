@@ -34,15 +34,20 @@ interface IPizzaBuilder {
     getNewOne(): void;
     buildPizza(): Pizza;
 }
-
-class Pizza {
+export class Pizza {
     private _shape!: Shape;
     private _size!: Size;
     private _sause!: Sauses;
     private _ingredients: Ingredients[] = [];
+    get shape(): Shape {
+        return this._shape;
+    }
     setShape(shape: Shape): Pizza {
         this._shape = shape;
         return this;
+    }
+    get size(): Size {
+        return this._size;
     }
     setSize(size: Size): Pizza {
         this._size = size;
@@ -52,9 +57,15 @@ class Pizza {
         this._sause = sause;
         return this;
     }
+    get sause(): Sauses {
+        return this._sause;
+    }
     addIngredient(ingredient: Ingredients): Pizza {
         this._ingredients.push(ingredient);
         return this;
+    }
+    getToppings(): Ingredients[] {
+        return this._ingredients;
     }
     toString(): string {
         return `Pizza has a ${this._shape} shape , size ${this._size}, with ${
@@ -63,18 +74,20 @@ class Pizza {
     }
 }
 
-class PizzaBuilder implements IPizzaBuilder {
+export class PizzaBuilder implements IPizzaBuilder {
     private pizza!: Pizza;
 
     constructor() {
         this.getNewOne();
     }
+    getPizza(): Pizza {
+        return this.pizza;
+    }
     getNewOne(): void {
         this.pizza = new Pizza();
     }
     addDough(size: Size, shape: Shape): PizzaBuilder {
-        this.pizza.setShape(shape);
-        this.pizza.setSize(size);
+        this.pizza.setShape(shape).setSize(size);
         return this;
     }
     addSauce(sause: Sauses): PizzaBuilder {
@@ -108,8 +121,9 @@ export enum PizzaType {
 
 export class Manager implements IManager {
     private builder: PizzaBuilder;
-    constructor() {
-        this.builder = new PizzaBuilder();
+    // Додав можливiсть задавати бiлдер для того щоб спробувати можливостi jest)
+    constructor(builder?: PizzaBuilder) {
+        this.builder = builder || new PizzaBuilder();
     }
     createChickenPizza(size: Size, shape: Shape): Pizza {
         const ingredients = [Ingredients.Chicken, Ingredients.Tomato, Ingredients.Cheese];

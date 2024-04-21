@@ -1,6 +1,15 @@
 // showHello('greeting', 'TypeScript');
 
-import { Ingredients, Manager, PizzaType, Sauses, Shape, Size, buildCustomPizza, buildPizza } from './builder';
+import {
+    Ingredients,
+    Manager,
+    PizzaType,
+    Sauses,
+    Shape,
+    Size,
+    buildCustomPizza,
+    buildPizza,
+} from './builderPattern/builder';
 import { Circle, Rectangle, Square, SquareCalculate, Squares, Triangle } from './classes';
 import { Debounced, Memoization } from './decorators';
 import { player, player2 } from './facade';

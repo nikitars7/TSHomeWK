@@ -191,3 +191,30 @@ atb.updateInfo('We have a great sale , come and find something that you need');
 atb.unsubscribe(foodsobserver1);
 
 atb.updateInfo('Fish, meat and so on on sale');
+
+// погрався з синглтоном , як без нього)
+// class Counter {
+//     count!: number;
+//     static instance: Counter;
+//     constructor() {
+//         if (typeof Counter.instance === 'object') {
+//             return Counter.instance;
+//         }
+//         this.count = 0;
+//         Counter.instance = this;
+//         return this;
+//     }
+//     getCount() {
+//         return this.count;
+//     }
+//     increaseCount() {
+//         return this.count++;
+//     }
+// }
+
+// export const myCount1 = new Counter();
+// export const myCount2 = new Counter();
+// myCount1.increaseCount();
+// myCount1.increaseCount();
+// myCount2.increaseCount();
+// myCount2.increaseCount();

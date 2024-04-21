@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pizza class test suits should return a string 1`] = `"Pizza has a undefined shape , size undefined, with undefined sause and ingredients: "`;
